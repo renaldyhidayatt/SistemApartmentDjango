@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class ComplainConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'complain'
+    name = 'apps.complain'
