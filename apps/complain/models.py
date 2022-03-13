@@ -14,7 +14,7 @@ class Complain(Timestamp):
         max_length=100,
         error_messages={"max_length": "You cant add more than 100 characters"},
     )
-    date = models.CharField(
+    date = models.DateField(
         max_length=100,
         error_messages={"max_length": "You cant add more than 100 characters"},
     )
@@ -22,4 +22,5 @@ class Complain(Timestamp):
     year = models.OneToOneField(Year, on_delete=models.CASCADE)
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
 
-    
+    def __str__(self):
+        return self.title

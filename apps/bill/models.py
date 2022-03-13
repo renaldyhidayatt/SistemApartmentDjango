@@ -26,6 +26,11 @@ class Bill(Timestamp):
     )
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
 
+    class Meta:
+        verbose_name = "All Bill"
+        verbose_name_plural = "Alll Bills"        
+
+
 
 class BillType(Timestamp):
     bill_type = models.CharField(max_length=200, error_messages={"max_length": "You cant add more than 200 characters"})
