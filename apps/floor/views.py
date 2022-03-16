@@ -52,7 +52,8 @@ class FloorUpdate(View):
 
         context = {
             "form": form,
-            "branch": branch
+            "branch": branch,
+            "floor": floor
         }
 
         return render(request, "floor/update.html", context)

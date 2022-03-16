@@ -1,0 +1,109 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+<h1 class="h3 mb-2 text-gray-800">Table Category</h1>
+<p class="mb-4">
+    DataTables is a third party plugin that is used to generate the demo table
+    below. For more information about DataTables, please visit the
+    <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.
+</p>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+    </div>
+    <div class="card-body">
+        <form action="{% url 'faircreate' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="Type">Type</label>
+                {{form.type}}
+            </div>
+            <div class="form-group">
+                <label for="Floor">Floor</label>
+                <select name="floor" class="form-control">
+                    <option value="Kosong">Kosong</option>
+                    {% for i in floor %}
+                    <option value="{{i.floor_no}}">{{i.floor_no}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Floor">Floor</label>
+                <select name="unit" class="form-control">
+                    <option value="Kosong">Kosong</option>
+                    {% for i in unit %}
+                    <option value="{{i.unit_no}}">{{i.unit_no}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Rid">Rid</label>
+                {{form.rid}}
+            </div>
+            <div class="form-group">
+                <label for="Month">Month</label>
+                <select name="month" class="form-control">
+                    <option value="Kosong">Kosong</option>
+                    {% for i in month %}
+                    <option value="{{i.name}}">{{i.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Year">Year</label>
+                <select name="year" id="">
+                    <option value="Kosong">Kosong</option>
+                    {% for i in year %}
+                    <option value="{{i.name}}">{{i.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Water Bill">Water bill</label>
+                {{form.water_bill}}
+            </div>
+            <div class="form-group">
+                <label for="Electric Bill">Electric Bill</label>
+                {{form.electric_bill}}
+            </div>
+            <div class="form-group">
+                <label for="Gas Bill">Gas Bill</label>
+                {{form.gas_bill}}
+            </div>
+            <div class="form-group">
+                <label for="Security Bill">Security Bill</label>
+                {{form.security_bill}}
+            </div>
+
+            <div class="form-group">
+                <label for="Utility Bill">utility Bill</label>
+                {{form.utility_bill}}
+            </div>
+            <div class="form-group">
+                <label for="Other Bill">Other Bill</label>
+                {{form.other_bill}}
+            </div>
+            <div class="form-group">
+                <label for="Total Rent">Total rent</label>
+                {{form.total_rent}}
+            </div>
+            <div class="form-group">
+                <label for="Issue Date">Issue Date</label>
+                {{form.issue_date}}
+            </div>
+            <div class="form-group">
+                <label for="Branch">Branch</label>
+                <select name="branch" class="form-control">
+                    <option value="Kosong">Kosong</option>
+                    {% for i in branch %}
+                    <option value="{{i.name}}">{{i.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

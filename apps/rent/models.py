@@ -19,3 +19,7 @@ class Rent(Timestamp):
     month = models.OneToOneField(Month, on_delete=models.CASCADE)
     year = models.OneToOneField(Year, on_delete=models.CASCADE)
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
+
+
+    def __str__(self):
+        return self.address

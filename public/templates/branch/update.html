@@ -1,0 +1,43 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+<h1 class="h3 mb-2 text-gray-800">Table Category</h1>
+<p class="mb-4">
+    DataTables is a third party plugin that is used to generate the demo table
+    below. For more information about DataTables, please visit the
+    <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.
+</p>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+    </div>
+    <div class="card-body">
+        <form action="{% url 'branchupdate'branch.id  %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="Name">Name</label>
+                {{form.name}}
+            </div>
+            <div class="form-group">
+                <label for="Email">Email</label>
+                {{form.email}}
+            </div>
+            <div class="form-group">
+                <label for="Contact">Contact</label>
+                {{form.contact}}
+            </div>
+            <div class="form-group">
+                <label for="Address">Address</label>
+                {{form.address}}
+            </div>
+            <div class="form-group">
+                <label for="Status">Status</label>
+                {{form.status}}
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

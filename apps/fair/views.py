@@ -100,7 +100,8 @@ class FairUpdate(View):
             "year": year,
             "branch": branch,
             "unit": unit,
-            "floor": floor
+            "floor": floor,
+            "fair": fair
         }
 
         return render(request,"fair/update.html", context)

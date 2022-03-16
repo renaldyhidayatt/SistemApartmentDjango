@@ -35,7 +35,8 @@ class MonthUpdate(View):
         month_id = Month.objects.get(id=id)
         form = MonthForm(instance=month_id)
         context = {
-            "form": form
+            "form": form,
+            "month": month
         }
 
         return render(request, "month/update.html", context)

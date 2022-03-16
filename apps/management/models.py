@@ -13,3 +13,6 @@ class Management(Timestamp):
     end_date = models.DateField(null=True)
     status = models.IntegerField(default=0)
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.contact

@@ -89,7 +89,8 @@ class RentUpdate(View):
             "unit": unit,
             "month": month,
             "year": year,
-            "branch": branch
+            "branch": branch,
+            "rent": rent
         }
 
         return render(request, "rent/create.html",context)

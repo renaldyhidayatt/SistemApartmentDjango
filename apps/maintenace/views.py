@@ -63,7 +63,8 @@ class MaintanceUpdate(View):
         context = {
             "form": form,
             "month": month,
-            "year": year
+            "year": year,
+            "maintance": maintance
         }
 
         return render(request, "maintance/create.html", context)

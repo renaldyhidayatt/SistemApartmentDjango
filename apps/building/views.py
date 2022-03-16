@@ -13,10 +13,12 @@ class BuildingList(ListView):
 
 class BuildingCreate(View):
     def get(self, request):
-        form = BuildingForm
+        form = BuildingForm()
+        branch = Branch.objects.all()
 
         context = {
-            "form": form
+            "form": form,
+            "branch": branch
         }
 
         return render(request, "building/create.html", context)
@@ -63,7 +65,8 @@ class BuildingUpdate(View):
         form = BuildingForm(instance=building)
 
         context = {
-            "form": form
+            "form": form,
+            "building": building
         }
 
         return render(request, "building/update.html", context)

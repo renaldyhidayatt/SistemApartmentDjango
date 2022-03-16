@@ -48,7 +48,8 @@ class BranchUpdate(View):
         form = BranchForm(instance=branch) 
 
         context = {
-            "form": form
+            "form": form,
+            "branch": branch
         }       
 
         return render(request, "branch/update.html", context)

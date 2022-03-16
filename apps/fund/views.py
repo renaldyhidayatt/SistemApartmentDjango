@@ -70,7 +70,8 @@ class FundUpdate(View):
             "form": form,
             "month": month,
             "year": year,
-            "branch": branch
+            "branch": branch,
+            "fund": fund
         }
 
         return render(request, "fund/update.html", context)

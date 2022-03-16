@@ -1,5 +1,5 @@
 from django import forms
-
+from .models import Rent
 
 class RentForm(forms.ModelForm):
     address = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control"}))

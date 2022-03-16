@@ -70,7 +70,8 @@ class ComplainUpdate(View):
             "form": form,
             "year": year,
             "month": month,
-            "user": user
+            "user": user,
+            "complain": complain
         }
         return render(request, "complain/index.html", context)
 

@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "apps.management",
     "apps.rent",
     "apps.unit",
+    "apps.utility",
     "apps.visitor",
     "apps.users"
 

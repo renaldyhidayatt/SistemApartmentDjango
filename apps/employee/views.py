@@ -95,7 +95,7 @@ class EmployeeUpdate(View):
         user = Users.objects.all()
         branch = Branch.objects.all()
 
-        context = {"form": form, "user": user, "branch": branch}
+        context = {"form": form, "user": user, "branch": branch, "employee": employee}
 
         return render(request, "employesalary/update.html", context)
 

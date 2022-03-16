@@ -5,5 +5,5 @@ urlpatterns = [
     path("", YearList.as_view(),name="year"),
     path("create/", YearCreate.as_view(),name="yearcreate"),
     path("update/<int:id>", YearUpdate.as_view(),name="yearupdate"),
-    path("delete/<int:id>", YearDelete.as_view(),name="yeardelete"),
+    path("delete/<int:id>", YearDelete,name="yeardelete"),
 ]

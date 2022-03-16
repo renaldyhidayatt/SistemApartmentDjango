@@ -1,0 +1,62 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+<h1 class="h3 mb-2 text-gray-800">Table Category</h1>
+<p class="mb-4">
+    DataTables is a third party plugin that is used to generate the demo table
+    below. For more information about DataTables, please visit the
+    <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.
+</p>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+    </div>
+    <div class="card-body">
+        <form action="{% url 'complainupdate' complain.id %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="Title">Title</label>
+                {{form.title}}
+            </div>
+            <div class="form-group">
+                <label for="Description">Description</label>
+                {{form.description}}
+            </div>
+            <div class="form-group">
+                <label for="Contact">Contact</label>
+                {{form.date}}
+            </div>
+            <div class="form-group">
+                <label for="Month">Month</label>
+                <select name="month" id="month">
+                    <option value="Kosong">Kosong</option>
+                    {% for i in month %}
+                        <option value="{{i.name}}">{{i.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Year">Year</label>
+                <select name="year" id="year">
+                    <option value="Kosong">Kosong</option>
+                    {% for i in year %}
+                        <option value="{{i.name}}">{{i.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="User">User</label>
+                <select name="user" id="user">
+                    <option value="Kosong">Kosong</option>
+                    {% for i in user %}
+                        <option value="{{i.email}}">{{i.email}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

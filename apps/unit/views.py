@@ -55,7 +55,8 @@ class UnitUpdate(View):
         context = {
             "form":form,
             "branch": branch,
-            "floor": floor
+            "floor": floor,
+            "unit": unit_id
         }
 
         return render(request, "unit/create.html", context)

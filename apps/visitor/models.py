@@ -15,5 +15,5 @@ class Visitor(Timestamp):
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
     intime = models.DateTimeField()
     outtime = models.DateTimeField()
-    month = models.OneToOneField(Year, on_delete=models.CASCADE)
+    month = models.OneToOneField(Month, on_delete=models.CASCADE)
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE)

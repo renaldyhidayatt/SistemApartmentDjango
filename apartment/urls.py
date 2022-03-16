@@ -20,5 +20,20 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", include("apps.bill.urls"))
+    path("bill/", include("apps.bill.urls")),
+    path("branch/", include("apps.branch.urls")),
+    path("building/", include("apps.building.urls")),
+    path("complain/", include("apps.complain.urls")),
+    path("employee/", include("apps.employee.urls")),
+    path("fair/", include("apps.fair.urls")),
+    path("floor/", include("apps.floor.urls")),
+    path("fund/", include("apps.fund.urls")),
+    path("maintance/", include("apps.maintenace.urls")),
+    path("management/", include("apps.management.urls")),
+    path("month/", include("apps.month.urls")),
+    path("rent/", include("apps.rent.urls")),
+    path("unit/", include("apps.unit.urls")),
+    path("visitor/", include("apps.visitor.urls")),
+    path("year/", include("apps.year.urls")),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

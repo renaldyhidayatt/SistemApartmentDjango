@@ -12,6 +12,6 @@ class ComplainForm(forms.ModelForm):
         model = Complain
         fields = [
             "title",
-            "desciption",
+            "description",
             "date"
         ]

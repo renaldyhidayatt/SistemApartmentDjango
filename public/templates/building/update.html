@@ -1,0 +1,71 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+<h1 class="h3 mb-2 text-gray-800">Table Category</h1>
+<p class="mb-4">
+    DataTables is a third party plugin that is used to generate the demo table
+    below. For more information about DataTables, please visit the
+    <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.
+</p>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+    </div>
+    <div class="card-body">
+        <form action="{% url 'buildingupdate' building.id %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="Name">Name</label>
+                {{form.name}}
+            </div>
+            <div class="form-group">
+                <label for="Address">Address</label>
+                {{form.address}}
+            </div>
+            <div class="form-group">
+                <label for="securityGuardMobile">securityGuardMobile</label>
+                {{form.securityGuardMobile}}
+            </div>
+            <div class="form-group">
+                <label for="secratatyMobile">secratatyMobile</label>
+                {{form.secratatyMobile}}
+            </div>
+            <div class="form-group">
+                <label for="moderatorMobile">moderatorMobile</label>
+                {{form.moderatorMobile}}
+            </div>
+            <div class="form-group">
+                <label for="buildingMakeYear">buildingMakeYear</label>
+                {{form.buildingMakeYear}}
+            </div>
+            <div class="form-group">
+                <label for="building_name">building_name</label>
+                {{form.b_name}}
+            </div>
+            <div class="form-group">
+                <label for="building_address">building_address</label>
+                {{form.b_address}}
+            </div>
+            <div class="form-group">
+                <label for="building_phone">building_phone</label>
+                {{form.b_phone}}
+            </div>
+            <div class="form-group">
+                <label for="buildingImage">buildingImage</label>
+                {{form.buildingImage}}
+            </div>
+            <div class="form-group">
+                <select name="branch" id="">
+                    <option value="Kosong">Kosong</option>
+                    {% for i in branch %}
+                        <option value="{{i.name}}">{{i.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
