@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     "apps.unit",
     "apps.utility",
     "apps.visitor",
-    "apps.users"
+    "apps.users",
+    "apps.dashboard"
 
 ]
 
@@ -65,6 +66,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "middleware.admin.AdminMiddleware",
 ]
 
 ROOT_URLCONF = 'apartment.urls'
