@@ -1,9 +1,22 @@
 from django.urls import path
 from .views import BuildingList, BuildingCreate, BuildingUpdate, BuildingDelete
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
-    path("", BuildingList.as_view(), name="building"),
-    path("create/", BuildingCreate.as_view(), name="buildingcreate"),
-    path("update/<int:id>", BuildingUpdate.as_view(), name="buildingupdate"),
-    path("delete/<int:id>", BuildingDelete, name="buildingdelete")
+    path(
+        "",
+        login_required(BuildingList.as_view(), login_url="/auth/login"),
+        name="building",
+    ),
+    path(
+        "create/",
+        login_required(BuildingCreate.as_view(), login_url="/auth/login"),
+        name="buildingcreate",
+    ),
+    path(
+        "update/<int:id>",
+        login_required(BuildingUpdate.as_view(), login_url="/auth/login"),
+        name="buildingupdate",
+    ),
+    path("delete/<int:id>", BuildingDelete, name="buildingdelete"),
 ]

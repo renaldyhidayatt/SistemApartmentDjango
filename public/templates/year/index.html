@@ -19,7 +19,7 @@
         <table id="example" class="table table-striped table-bordered" style="width:100%">
             <thead>
                 <tr>
-                    <th>No</th>
+                    <th>ID</th>
                     <th>Name</th>
                     <th>Action</th>
                 </tr>
@@ -27,7 +27,7 @@
             <tbody>
                 {% for i in year_list %}
                 <tr>
-                    <td>{{i++}}</td>
+                    <td>{{i.id}}</td>
                     <td>{{i.name}}</td>
                     <td>
                         <a href="{% url 'yearupdate' i.id %}" class="btn btn-primary btn-sm">Edit</button>

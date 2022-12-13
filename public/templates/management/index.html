@@ -19,7 +19,7 @@
         <table id="example" class="table table-striped table-bordered" style="width:100%">
             <thead>
                 <tr>
-                    <th>No</th>
+                    <th>ID</th>
                     <th>Contact</th>
                     <th>Address</th>
                     <th>Nid</th>
@@ -34,7 +34,7 @@
             <tbody>
                 {% for i in management_list %}
                 <tr>
-                    <td>{{i++}}</td>
+                    <td>{{i.id}}</td>
                     <td>{{i.contact}}</td>
                     <td>{{i.address}}</td>
                     <td>{{i.nid}}</td>

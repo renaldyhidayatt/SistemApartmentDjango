@@ -18,8 +18,7 @@
           <!-- Begin Page Content -->
           <div class="container-fluid">
             <!-- Page Heading -->
-            {% block content %}
-            {% endblock %}
+            {% block content %} {% endblock %}
           </div>
           <!-- /.container-fluid -->
         </div>
@@ -48,14 +47,17 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button
-              class="close"
-              type="button"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
+            <form action="{% url 'logout' %}" method="GET">
+              <a
+                href="{% url 'logout' %}"
+                class="close"
+                type="button"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">×</span>
+              </a>
+            </form>
           </div>
           <div class="modal-body">
             Select "Logout" below if you are ready to end your current session.
@@ -68,7 +70,6 @@
             >
               Cancel
             </button>
-            <a class="btn btn-primary" href="/logout.html">Logout</a>
           </div>
         </div>
       </div>
@@ -77,7 +78,6 @@
     <!-- Bootstrap core JavaScript-->
     <script src="/static/vendor/jquery/jquery.min.js"></script>
     <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
 
     <!-- Core plugin JavaScript-->
     <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
@@ -88,11 +88,13 @@
     <!-- Page level plugins -->
     <script src="/static/vendor/chart.js/Chart.min.js"></script>
 
-    {% block javascript %}
-    {% endblock %}
+    {% block javascript %} {% endblock %}
     <!-- Page level custom scripts -->
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>
+    <script
+      src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"
+      type="text/javascript"
+    ></script>
     <script src="/static/js/demo/chart-area-demo.js"></script>
     <script src="/static/js/demo/chart-pie-demo.js"></script>
   </body>

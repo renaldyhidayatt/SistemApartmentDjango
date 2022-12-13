@@ -19,7 +19,7 @@
         <table id="example" class="table table-striped table-bordered" style="width:100%">
             <thead>
                 <tr>
-                    <th>No</th>
+                    <th>ID</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Contact</th>
@@ -31,7 +31,7 @@
             <tbody>
                 {% for i in branch_list %}
                 <tr>
-                    <td>{{i++}}</td>
+                    <td>{{i.id}}</td>
                     <td>{{i.name}}</td>
                     <td>{{i.email}}</td>
                     <td>{{i.contact}}</td>

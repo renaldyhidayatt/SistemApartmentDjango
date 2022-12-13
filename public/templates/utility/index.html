@@ -19,7 +19,7 @@
         <table id="example" class="table table-striped table-bordered" style="width:100%">
             <thead>
                 <tr>
-                    <th>No</th>
+                    <th>ID</th>
                     <th>Gas Bill</th>
                     <th>Security Bill</th>
                     <th>Action</th>
@@ -28,7 +28,7 @@
             <tbody>
                 {% for i in utility_list %}
                 <tr>
-                    <td>{{i++}}</td>
+                    <td>{{i.id}}</td>
                     <td>{{i.gas_bill}}</td>
                     <td>{{i.security_bill}}</td>
                     <td>

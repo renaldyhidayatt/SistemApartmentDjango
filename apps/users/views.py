@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import Users
 from django.contrib import auth
+from django.contrib import messages
+
 
 # Create your views here.
 
@@ -16,6 +18,7 @@ def loginView(request):
 
         return redirect("dashboard")
     else:
+        messages.error(request, "Error Field input")
         return render(request, "auth/login.html")
 
 
@@ -35,8 +38,16 @@ def registerView(request):
         )
 
         user.save()
+        messages.success(request, "Berhasil register")
 
         return redirect("login")
 
     else:
-        return render(request, "auth/register.html")
+        messages.error(request, "Tidak register")
+        return render(request, "auth/login.html")
+
+
+def logoutView(request):
+    auth.logout(request)
+
+    return redirect("login")

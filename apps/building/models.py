@@ -16,4 +16,5 @@ class BuildingInfo(Timestamp):
     buildingImage = models.ImageField()
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
 
-    
+    def __str__(self):
+        return self.name

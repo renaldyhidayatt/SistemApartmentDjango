@@ -19,7 +19,7 @@
         <table id="example" class="table table-striped table-bordered" style="width:100%">
             <thead>
                 <tr>
-                    <th>No</th>
+                    <th>ID</th>
                     <th>No Floor</th>
                     <th>Branch</th>
                     <th>Action</th>
@@ -28,7 +28,7 @@
             <tbody>
                 {% for i in floor_list %}
                 <tr>
-                    <td>{{i++}}</td>
+                    <td>{{i.id}}</td>
                     <td>{{i.floor_no}}</td>
                     <td>{{i.branch}}</td>
                     <td>

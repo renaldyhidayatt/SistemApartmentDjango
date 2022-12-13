@@ -1,27 +1,31 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from .models import Employee, EmployeeSalary
 from .forms import EmployeeForm, EmployeeSalaryForm
 from apps.users.models import Users
 from apps.branch.models import Branch
 from apps.year.models import Year
 from apps.month.models import Month
+from apps.users.models import Users
+from django.contrib import messages
 
 
 # Create your views here.
-class EmployeeList(ListView):
+class EmployeeList(LoginRequiredMixin, ListView):
     model = Employee
     template_name = "employee/index.html"
     context_object_name = "employee_list"
 
 
-class EmployeeSalaryList(ListView):
+class EmployeeSalaryList(LoginRequiredMixin, ListView):
     model = EmployeeSalary
     template_name = "employeesalary/index.html"
     context_object_name = "em_salarylist"
 
 
-class EmployeeCreate(View):
+class EmployeeCreate(LoginRequiredMixin, View):
     def get(self, request):
         form = EmployeeForm()
         user = Users.objects.all()
@@ -42,7 +46,7 @@ class EmployeeCreate(View):
             user = form.cleaned_data["user"]
             branch = form.cleaned_data["branch"]
 
-            user_id = User.objects.get(email=user)
+            user_id = Users.objects.filter(is_superuser=False, email=user)
             branch_id = Branch.objects.get(name=branch)
 
             Employee.objects.create(
@@ -54,11 +58,14 @@ class EmployeeCreate(View):
                 user=user_id,
                 branch=branch_id,
             )
-
+            messages.success(request, "berhasil membuat employee")
+            return redirect("employee")
+        else:
+            messages.error(request, "gagal membuat employee")
             return redirect("employee")
 
 
-class EmployeSalaCreate(View):
+class EmployeSalaCreate(LoginRequiredMixin, View):
     def get(self, request):
         form = EmployeeSalaryForm()
         year = Year.objects.all()
@@ -84,11 +91,15 @@ class EmployeSalaCreate(View):
             EmployeeSalary.objects.create(
                 amount=amount, year=year_id, month=month_id, employee=employee_id
             )
+            messages.success(request, "Berhasil membuat employee")
 
+            return redirect("employeesalary")
+        else:
+            messages.error(request, "Gagal membuat employee")
             return redirect("employeesalary")
 
 
-class EmployeeUpdate(View):
+class EmployeeUpdate(LoginRequiredMixin, View):
     def get(self, request, id):
         employee = Employee.objects.get(id=id)
         form = EmployeeForm(instance=employee)
@@ -111,23 +122,26 @@ class EmployeeUpdate(View):
             user = form.cleaned_data["user"]
             branch = form.cleaned_data["branch"]
 
-            user_id = User.objects.get(email=user)
+            user_id = Users.objects.get(email=user)
             branch_id = Branch.objects.get(name=branch)
 
             employee.address = address
             employee.nid = nid
             employee.designation = designation
             employee.date = date
-            employee.ending_date =ending_date
+            employee.ending_date = ending_date
             employee.user = user_id
             employee.branch = branch_id
 
             employee.save()
-
+            messages.success(request, "Berhasil update employee")
+            return redirect("employee")
+        else:
+            messages.error(request, "Gagal update employee")
             return redirect("employee")
 
 
-class EmployeSalaUpdate(View):
+class EmployeSalaUpdate(LoginRequiredMixin, View):
     def get(self, request, id):
         form = EmployeeSalaryForm()
         year = Year.objects.all()
@@ -137,7 +151,6 @@ class EmployeSalaUpdate(View):
         context = {"form": form, "year": year, "month": month, "employee": employee}
 
         return render(request, "employesalary/update.html", context)
-
 
     def post(self, request, id):
         employesala = EmployeeSalary.objects.get(id=id)
@@ -158,25 +171,33 @@ class EmployeSalaUpdate(View):
             employesala.employee = employee_id
 
             employesala.save()
-
+            messages.success(request, "Berhasil update employee salery")
+            return redirect("employeesalary")
+        else:
+            messages.error(request, "Gagal update employee salery")
             return redirect("employeesalary")
 
 
-
+@login_required(login_url="/auth/login")
 def EmployeeDelete(request, id):
     employee = Employee.objects.get(id=id)
 
     try:
         employee.delete()
+        messages.success(request, "Berhasil delete employee")
         return redirect("employee")
     except Employee.DoesNotExist:
-        raise Exception("Employee")
+        messages.error(request, "Gagal delete employee")
+        return redirect("employee")
 
 
+@login_required(login_url="/auth/login")
 def EmployeeSalaDelete(request):
     employesala = EmployeeSalary.objects.get(id=id)
     try:
         employesala.delete()
-        return redirect("employee")
+        messages.success(request, "Berhasil delete employee salery")
+        return redirect("employeesalary")
     except EmployeeSalary.DoesNotExist:
-        raise Exception("Employee")
+        messages.error(request, "Gagal delete employee salery")
+        return redirect("employeesalary")

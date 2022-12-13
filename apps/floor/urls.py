@@ -1,9 +1,20 @@
 from django.urls import path
-from .views import FloorList, FloorCreate,FloorUpdate, FloorDelete
+from .views import FloorList, FloorCreate, FloorUpdate, FloorDelete
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
-    path("", FloorList.as_view(), name="floor"),
-    path("create/", FloorCreate.as_view(), name="floorcreate"),
-    path("update/<int:id>", FloorUpdate.as_view(),name="floorupdate"),
-    path("delete/<int:id>", FloorDelete, name="floordelete")
+    path(
+        "", login_required(FloorList.as_view(), login_url="/auth/login"), name="floor"
+    ),
+    path(
+        "create/",
+        login_required(FloorCreate.as_view(), login_url="/auth/login"),
+        name="floorcreate",
+    ),
+    path(
+        "update/<int:id>",
+        login_required(FloorUpdate.as_view(), login_url="/auth/login"),
+        name="floorupdate",
+    ),
+    path("delete/<int:id>", FloorDelete, name="floordelete"),
 ]

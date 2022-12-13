@@ -8,7 +8,7 @@ from apps.management.models import Management
 from django.contrib.auth.decorators import login_required
 
 
-# @login_required(login_url="/auth/login")
+@login_required(login_url="/auth/login")
 def DashboardView(request):
     rent_count = Rent.objects.count()
     maintance_count = Maintance.objects.count()

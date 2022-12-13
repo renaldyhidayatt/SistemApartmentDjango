@@ -1,28 +1,29 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View, ListView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from .forms import BillForm
 from .models import Bill
 from apps.month.models import Month
 from apps.year.models import Year
 from apps.branch.models import Branch
-from django.shortcuts import get_object_or_404
+from django.contrib import messages
 
 
 # Create your views here.
-class BillList(ListView):
+class BillList(LoginRequiredMixin, ListView):
     model = Bill
     template_name = "bill/index.html"
     context_object_name = "bill_list"
 
-class BillCreate(View):
+
+class BillCreate(LoginRequiredMixin, View):
     def get(self, request):
         month = Month.objects.all()
         year = Year.objects.all()
         branch = Branch.objects.all()
-        
-        bill = Bill.objects.get(id=id)
 
-        
+        bill = Bill.objects.get(id=id)
 
         form = BillForm()
         context = {
@@ -30,14 +31,14 @@ class BillCreate(View):
             "bill": bill,
             "month": month,
             "year": year,
-            "branch": branch
+            "branch": branch,
         }
 
         return render(request, "bill/update.html", context)
-       
 
     def post(self, request):
-        if self.form_classes.is_valid():
+        form = BillForm(request.POST)
+        if form.is_valid():
             type = form.cleaned_data["type"]
             date = form.cleaned_data["date"]
             deposit_bank = form.cleaned_data["deposit_bank"]
@@ -57,22 +58,23 @@ class BillCreate(View):
                 details=details,
                 month=month_name,
                 year=year_name,
-                branch=branch_name
+                branch=branch_name,
             )
+            messages.success(request, "Berhasil membuat bill")
 
+            return redirect("bill")
+        else:
+            messages.error(request, "Failed create bill")
             return redirect("bill")
 
 
-class BillUpdate(View):
-    
+class BillUpdate(LoginRequiredMixin, View):
     def get(self, request, id):
         month = Month.objects.all()
         year = Year.objects.all()
         branch = Branch.objects.all()
-        
-        bill = Bill.objects.get(id=id)
 
-        
+        bill = Bill.objects.get(id=id)
 
         form = BillForm(instance=bill)
         context = {
@@ -80,11 +82,10 @@ class BillUpdate(View):
             "bill": bill,
             "month": month,
             "year": year,
-            "branch": branch
+            "branch": branch,
         }
 
         return render(request, "bill/update.html", context)
-        
 
     def post(self, request, id):
         bill = Bill.objects.get(id=id)
@@ -111,19 +112,21 @@ class BillUpdate(View):
             bill.branch = branch_name
 
             bill.save()
+            messages.success(request, "Berhasil update bill")
+            return redirect("bill")
+        else:
+            messages.error(request, "Gagal update bill")
+            return redirect("bill")
 
-            return redirect('bill')
 
-
-
-
-
-
+@login_required(login_url="/auth/login")
 def BillDelete(request, id):
     bill = Bill.objects.get(id=id)
 
     try:
         bill.delete()
+        messages.success(request, "Berhasil hapus bill")
+        return redirect("bill")
     except Bill.DoesNotExist:
-        raise Exception("Nice")
-    
+        messages.error(request, "Gagal delete bill")
+        return redirect("bill")

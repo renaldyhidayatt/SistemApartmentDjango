@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from .models import Fair
 from .forms import FairForm
 from apps.month.models import Month
@@ -7,17 +9,17 @@ from apps.year.models import Year
 from apps.branch.models import Branch
 from apps.unit.models import Unit
 from apps.floor.models import Floor
-
+from django.contrib import messages
 
 
 # Create your views here.
-class FairList(ListView):
+class FairList(LoginRequiredMixin, ListView):
     model = Fair
     template_name = "fair/index.html"
     context_object_name = "fair_list"
 
 
-class FairCreate(View):
+class FairCreate(LoginRequiredMixin, View):
     def get(self, request):
         form = FairForm()
         month = Month.objects.all()
@@ -32,10 +34,10 @@ class FairCreate(View):
             "year": year,
             "branch": branch,
             "unit": unit,
-            "floor": floor
+            "floor": floor,
         }
 
-        return render(request,"fair/create.html", context)
+        return render(request, "fair/create.html", context)
 
     def post(self, request):
         form = FairForm(request.POST)
@@ -62,10 +64,9 @@ class FairCreate(View):
             year_id = Year.objects.get(name=year)
             branch_id = Branch.objects.get(name=branch)
 
-
             Fair.objects.create(
                 type=type,
-                floor=floor,
+                floor=floor_id,
                 unit=unit_id,
                 rid=rid,
                 month=month_id,
@@ -78,13 +79,17 @@ class FairCreate(View):
                 other_bill=other_bill,
                 total_rent=total_rent,
                 issue_date=issue_date,
-                branch=branch_id
+                branch=branch_id,
             )
+            messages.success(request, "Berhasil membuat fair")
 
+            return redirect("fair")
+        else:
+            messages.error(request, "Gagal membuat fair")
             return redirect("fair")
 
 
-class FairUpdate(View):
+class FairUpdate(LoginRequiredMixin, View):
     def get(self, request, id):
         fair = Fair.objects.get(id=id)
         form = FairForm(instance=fair)
@@ -101,10 +106,10 @@ class FairUpdate(View):
             "branch": branch,
             "unit": unit,
             "floor": floor,
-            "fair": fair
+            "fair": fair,
         }
 
-        return render(request,"fair/update.html", context)
+        return render(request, "fair/update.html", context)
 
     def post(self, request, id):
         fair = Fair.objects.get(id=id)
@@ -139,6 +144,7 @@ class FairUpdate(View):
             fair.month = month_id
             fair.year = year_id
             fair.water_bill = water_bill
+            fair.gas_bill = gas_bill
             fair.electric_bill = electric_bill
             fair.security_bill = security_bill
             fair.utility_bill = utility_bill
@@ -147,14 +153,21 @@ class FairUpdate(View):
             fair.issue_date = issue_date
             fair.branch = branch_id
 
+            messages.success(request, "Berhasil update fair")
+
+            return redirect("fair")
+        else:
+            messages.error(request, "Gagal update fair")
             return redirect("fair")
 
 
-
+@login_required(login_url="/auth/login")
 def FairDelete(request, id):
     fair = Fair.objects.get(id=id)
     try:
         fair.delete()
+        messages.success(request, "Berhasil delete fair")
         return redirect("fair")
     except Fair.DoesNotExist:
+        messages.error(request, "Gagal delete fair")
         raise Exception("Bisa")

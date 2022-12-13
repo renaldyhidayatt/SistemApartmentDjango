@@ -1,24 +1,24 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, View
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from .models import Management
 from .forms import ManagementForm
 from apps.branch.models import Branch
+from django.contrib import messages
 
 # Create your views here.
-class ManagementList(ListView):
+class ManagementList(LoginRequiredMixin, ListView):
     model = Management
     template_name = "management/index.html"
     context_object_name = "management_list"
 
 
-class ManagementCreate(View):
+class ManagementCreate(LoginRequiredMixin, View):
     def get(self, request):
         form = ManagementForm()
         branch = Branch.objects.all()
-        context = {
-            "form": form,
-            "branch": branch
-        }
+        context = {"form": form, "branch": branch}
         return render(request, "management/create.html", context)
 
     def post(self, request):
@@ -41,23 +41,25 @@ class ManagementCreate(View):
                 member_type=member_type,
                 joining_date=joining_date,
                 status=status,
-                branch=branch_id
+                branch=branch_id,
             )
+            messages.success(request, "Berhasil membuat management")
 
             return redirect("management")
+        else:
+            messages.error(request, "Gagal create management")
+            return redirect("management")
 
-class ManagementUpdate(View):
-    def get(self, request,id):
+
+class ManagementUpdate(LoginRequiredMixin, View):
+    def get(self, request, id):
         management = Management.objects.get(id=id)
         form = ManagementForm(instance=management)
         branch = Branch.objects.all()
-        context = {
-            "form": form,
-            "branch": branch
-        }
+        context = {"form": form, "branch": branch}
         return render(request, "management/create.html", context)
 
-    def post(self, request,id):
+    def post(self, request, id):
         management = Management.objects.get(id=id)
         form = ManagementForm(request.POST)
         if form.is_valid():
@@ -81,15 +83,23 @@ class ManagementUpdate(View):
 
             management.save()
 
+            messages.success(request, "Berhasil update management")
+
+            return redirect("management")
+        else:
+            messages.error(request, "Gagal update management")
 
             return redirect("management")
 
 
-def ManagementDelete(request,id):
+@login_required(login_url="/auth/login")
+def ManagementDelete(request, id):
     management = Management.objects.get(id=id)
     try:
         management.delete()
+        messages.success(request, "Berhasil delete management")
         return redirect("management")
 
     except Management.DoesNotExist:
-        raise Exception("No")
+        messages.error(request, "Gagal update management")
+        return redirect("management")

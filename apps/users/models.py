@@ -16,6 +16,7 @@ class Users(AbstractBaseUser, Timestamp, PermissionsMixin):
 
 
     USERNAME_FIELD="email"
+    REQUIRED_FIELDS = ["first_name", "last_name"]
 
     objects = UserManager()
 
